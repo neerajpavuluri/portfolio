@@ -1,12 +1,32 @@
-# Pavuluri Neeraj — Portfolio
+const typedElement = document.querySelector('.typed');
+const phrases = ['useful', 'human', 'alive', 'meaningful'];
 
-A minimal, modern portfolio for Pavuluri Neeraj, an Information Technology student at Gudlavalleru Engineering College.
+if (typedElement) {
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
 
-## Run locally
+  const tick = () => {
+    const current = phrases[phraseIndex];
+    if (!isDeleting) {
+      charIndex++;
+      typedElement.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        isDeleting = true;
+        setTimeout(tick, 1200);
+        return;
+      }
+    } else {
+      charIndex--;
+      typedElement.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+    }
 
-Open `index.html` in a browser. The site is built with plain HTML, CSS, and JavaScript and can be deployed as a static site (including GitHub Pages or Cloudflare Pages).
+    setTimeout(tick, isDeleting ? 50 : 110);
+  };
 
-## Personal links
-
-- GitHub: https://github.com/neerajpavuluri
-- Previous portfolio and more projects: https://neerajpavuluri.pages.dev/
+  setTimeout(tick, 700);
+}
